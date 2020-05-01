@@ -14,7 +14,9 @@ struct HelpCommand: Command {
 
   func run() throws {
     let result = commands.map {
-      "  \($0.name) \($0.arguments):  \($0.description)"
+      let argumentsString = $0.arguments.isEmpty ? "" : " " + $0.arguments
+      let usageString = "  \($0.name)\(argumentsString):".padding(toLength: 35, withPad: " ", startingAt: 0)
+      return usageString + $0.description
     }
     .joined(separator: "\n")
 

@@ -12,6 +12,8 @@ protocol Command {
 enum CommandError: LocalizedError {
   case missingArgument(String)
   case directoryNotFound(String)
+  case fileNotFound(String)
+  case formatNotSupported(String)
 
   var errorDescription: String? {
     switch self {
@@ -19,6 +21,10 @@ enum CommandError: LocalizedError {
       return "Missing argument <\(argument)>"
     case let .directoryNotFound(dir):
       return "Directoty not found \"\(dir)\""
+    case let .fileNotFound(file):
+      return "File not found \"\(file)\""
+    case let .formatNotSupported(format):
+      return "Format \"\(format)\" not supported"
     }
   }
 }

@@ -3,10 +3,11 @@ import Foundation
 struct CopyCommand: Command {
 
   static var name = "copy"
-  static var arguments = "<destination>"
+  static var arguments = "<destination> --replace|-r"
   static var description = "copies snippets found in xcode default location to <destination>"
 
   let destinationPath: String
+  let replace: Bool
 
   init(args: [String]) throws {
     if args.isEmpty {
@@ -17,6 +18,7 @@ struct CopyCommand: Command {
     }
 
     self.destinationPath = destinationPath
+    self.replace = args.contains("--replace") || args.contains("-r")
   }
 
   func run() throws {
@@ -35,7 +37,21 @@ struct CopyCommand: Command {
       let snippetSourcePath = sourcePath.appendingPathComponent(snippet)
       let snippetDestinationPath = destinationPath.appendingPathComponent(snippet)
       print("Copying \"\(snippet)\"")
-      try fm.copyItem(atPath: snippetSourcePath, toPath: snippetDestinationPath)
+
+      if replace {
+        try fm.removeItem(atPath: snippetDestinationPath)
+      }
+
+      do {
+        try fm.copyItem(atPath: snippetSourcePath, toPath: snippetDestinationPath)
+      } catch {
+        if error.code == NSFileWriteFileExistsError {
+          print("Can not copy file \(snippet) because it already exists. Use --replace or -r to overwrite.")
+        }
+        else {
+          throw error
+        }
+      }
     }
   }
 }

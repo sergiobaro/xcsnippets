@@ -41,13 +41,16 @@ struct InstallCommand: Command {
       let snippetDestinationPath = destinationPath.appendingPathComponent(snippet)
       print("Installing \"\(snippet)\"")
 
+      if replace {
+        try fm.removeItem(atPath: snippetDestinationPath)
+      }
+      
       do {
-        try fm.copyItemAt(originalItemPath: snippetSourcePath, withItemAtPath: snippetDestinationPath, overwrite: replace)
+        try fm.copyItem(atPath: snippetSourcePath, toPath: snippetDestinationPath)
       } catch {
         if error.code == NSFileWriteFileExistsError {
           print("Can not install file \(snippet) because it already exists. Use --replace or -r to overwrite.")
-        }
-        else {
+        } else {
           throw error
         }
       }
