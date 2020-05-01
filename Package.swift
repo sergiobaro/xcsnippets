@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "xcsnippets",
+    platforms: [
+        .macOS(.v10_15)
+    ],
     products: [
         .executable(name: "xcsnippets", targets: ["xcsnippets"]),
         .library(name: "XCSnippetsLib", targets: ["XCSnippetsLib"])
@@ -13,7 +16,7 @@ let package = Package(
         .target(
             name: "xcsnippets",
             dependencies: ["XCSnippetsLib"]
-            ),
+        ),
         .target(
             name: "XCSnippetsLib"
         ),

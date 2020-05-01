@@ -11,11 +11,14 @@ protocol Command {
 
 enum CommandError: LocalizedError {
   case missingArgument(String)
+  case directoryNotFound(String)
 
   var errorDescription: String? {
     switch self {
     case let .missingArgument(argument):
       return "Missing argument <\(argument)>"
+    case let .directoryNotFound(dir):
+      return "Directoty not found \"\(dir)\""
     }
   }
 }

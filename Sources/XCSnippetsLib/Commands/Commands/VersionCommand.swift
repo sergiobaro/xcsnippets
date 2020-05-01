@@ -6,7 +6,7 @@ struct VersionCommand: Command {
   static var arguments = ""
   static var description = "displays current version"
 
-  func run() throws {
+  func run() {
     print(Constants.version)
   }
 }

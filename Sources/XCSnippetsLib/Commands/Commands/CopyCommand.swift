@@ -19,7 +19,23 @@ struct CopyCommand: Command {
     self.destinationPath = destinationPath
   }
 
-  func run() {
+  func run() throws {
+    let fm = FileManager.default
+    let sourcePath = fm.homeDirectoryForCurrentUser.path + Constants.snippetsDefaultPath
 
+    guard fm.directoryExists(atPath: sourcePath) else {
+      throw CommandError.directoryNotFound(sourcePath)
+    }
+
+    let snippets = try fm.contentsOfDirectory(atPath: sourcePath).filter {
+      $0.pathExtension == Constants.codeSnippetExtension
+    }
+
+    try snippets.forEach { snippet in
+      let snippetSourcePath = sourcePath.appendingPathComponent(snippet)
+      let snippetDestinationPath = destinationPath.appendingPathComponent(snippet)
+      print("Copying \"\(snippet)\"")
+      try fm.copyItem(atPath: snippetSourcePath, toPath: snippetDestinationPath)
+    }
   }
 }
