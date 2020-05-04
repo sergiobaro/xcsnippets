@@ -19,8 +19,15 @@ struct ListCommand: Command {
       $0.pathExtension == Constants.codeSnippetExtension
     }
 
-    snippets.forEach { snippet in
-      print(snippet)
+    try snippets.forEach { snippet in
+      let snippetPath = sourcePath.appendingPathComponent(snippet)
+      guard let data = try String(contentsOfFile: snippetPath).data(using: .utf8) else {
+        print(snippet)
+        return
+      }
+
+      let codeSnippet = try PropertyListDecoder().decode(CodeSnippetPlist.self, from: data)
+      print("\(snippet) (\(codeSnippet.title))")
     }
   }
   
