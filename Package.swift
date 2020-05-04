@@ -12,17 +12,13 @@ let package = Package(
         .executable(name: "xcsnippets", targets: ["xcsnippets"]),
         .library(name: "XCSnippetsLib", targets: ["XCSnippetsLib"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/jpsim/Yams.git", from: "3.0.0")
-    ],
     targets: [
         .target(
             name: "xcsnippets",
             dependencies: ["XCSnippetsLib"]
         ),
         .target(
-            name: "XCSnippetsLib",
-            dependencies: ["Yams"]
+            name: "XCSnippetsLib"
         ),
         .testTarget(
             name: "XCSnippetsLibTests",

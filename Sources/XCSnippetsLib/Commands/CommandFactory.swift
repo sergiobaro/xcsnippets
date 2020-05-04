@@ -5,7 +5,6 @@ class CommandFactory {
   private let allCommands: [Command.Type] = [
     CopyCommand.self,
     InstallCommand.self,
-    TranslateCommand.self,
     VersionCommand.self,
     HelpCommand.self
   ]
@@ -21,9 +20,6 @@ class CommandFactory {
     }
     if commandString == InstallCommand.name {
       return try InstallCommand(args: commandArguments)
-    }
-    if commandString == TranslateCommand.name {
-      return try TranslateCommand(args: commandArguments)
     }
     if commandString == VersionCommand.name {
       return VersionCommand()
