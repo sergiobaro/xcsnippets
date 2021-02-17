@@ -3,21 +3,26 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>mark</string>
+	<string>activatebasicconstraints</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>// MARK: - &lt;#code#&gt;</string>
+	<string>NSLayoutConstraint.activate([
+    &lt;#view#&gt;.topAnchor.constraint(equalTo: &lt;#superview#&gt;.topAnchor),
+    &lt;#view#&gt;.leadingAnchor.constraint(equalTo: &lt;#superview#&gt;.leadingAnchor),
+    &lt;#view#&gt;.bottomAnchor.constraint(equalTo: &lt;#superview#&gt;.bottomAnchor),
+    &lt;#view#&gt;.trailingAnchor.constraint(equalTo: &lt;#superview#&gt;.trailingAnchor)
+])</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>F04C86B2-415E-4918-A52E-E037AF1DE307</string>
+	<string>61F8D84F-C7D6-4FFB-9708-67AA9EB71BDB</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Mark</string>
+	<string>Activate Basic Constraints</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
