@@ -24,10 +24,11 @@ struct InstallCommand: Command {
   func run() throws {
     let fm = FileManager.default
     let destinationPath = fm.homeDirectoryForCurrentUser.path + Constants.snippetsDefaultPath
-
-    guard fm.directoryExists(atPath: destinationPath) else {
-      throw CommandError.directoryNotFound(destinationPath)
+    
+    if !fm.directoryExists(atPath: destinationPath) {
+      try fm.createDirectory(atPath: destinationPath)
     }
+
     guard fm.directoryExists(atPath: sourcePath) else {
       throw CommandError.directoryNotFound(sourcePath)
     }

@@ -8,4 +8,8 @@ extension FileManager {
 
     return isDirectory.boolValue
   }
+  
+  func createDirectory(atPath path: String) throws {
+    try createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+  }
 }
