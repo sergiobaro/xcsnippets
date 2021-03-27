@@ -7,6 +7,8 @@ struct ListCommand: Command {
   static var arguments = ""
   static var description = "lists installed snippets"
 
+  init(args: [String]) throws {}
+
   func run() throws {
     let fm = FileManager.default
     let sourcePath = fm.homeDirectoryForCurrentUser.path + Constants.snippetsDefaultPath

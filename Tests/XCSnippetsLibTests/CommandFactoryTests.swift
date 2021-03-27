@@ -35,5 +35,9 @@ class CommandFactoryTests: XCTestCase {
     let command = try factory.make(["help"])
     XCTAssertTrue(command is HelpCommand)
   }
-  
+
+  func test_make_listCommand() throws {
+    let command = try factory.make(["list"])
+    XCTAssertTrue(command is ListCommand)
+  }
 }

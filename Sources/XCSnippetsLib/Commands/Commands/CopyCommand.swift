@@ -6,8 +6,8 @@ struct CopyCommand: Command {
   static var arguments = "<destination> --replace|-r"
   static var description = "copies snippets found in xcode default location to <destination>"
 
-  let destinationPath: String
-  let replace: Bool
+  private let destinationPath: String
+  private let replace: Bool
 
   init(args: [String]) throws {
     if args.isEmpty {

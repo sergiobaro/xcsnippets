@@ -1,15 +1,7 @@
 import Foundation
 
-protocol Command {
-
-  static var name: String { get }
-  static var arguments: String { get }
-  static var description: String { get }
-
-  func run() throws
-}
-
 enum CommandError: LocalizedError {
+
   case missingArgument(String)
   case directoryNotFound(String)
   case fileNotFound(String)
@@ -27,4 +19,15 @@ enum CommandError: LocalizedError {
       return "Format \"\(format)\" not supported"
     }
   }
+}
+
+protocol Command {
+
+  static var name: String { get }
+  static var arguments: String { get }
+  static var description: String { get }
+
+  init(args: [String]) throws
+
+  func run() throws
 }

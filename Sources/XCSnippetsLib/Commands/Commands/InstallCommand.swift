@@ -6,8 +6,8 @@ struct InstallCommand: Command {
   static var arguments = "<source> --replace|-r"
   static var description = "installs snippets found in <source> to xcode default location"
 
-  let sourcePath: String
-  let replace: Bool
+  private let sourcePath: String
+  private let replace: Bool
 
   init(args: [String]) throws {
     if args.isEmpty {
