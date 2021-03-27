@@ -3,17 +3,17 @@ import Foundation
 
 class FilesMock: Files {
 
-  var structure = [String: Any]()
+  var folders = [String: [String]]()
 
   var currentFolder = ""
   var homeFolder = ""
 
   func exists(_ path: String) -> Bool {
-    structure.keys.contains(path)
+    folders.keys.contains(path)
   }
 
   func contents(_ path: String) throws -> [String] {
-    (structure[path] as? [String]) ?? []
+    folders[path] ?? []
   }
 
   func isDirectory(_ path: String) -> Bool {
@@ -34,6 +34,10 @@ class FilesMock: Files {
   }
 
   func createFolder(_ path: String) throws {
+    // empty
+  }
+
+  func copy(from: String, to: String) throws {
     // empty
   }
 }

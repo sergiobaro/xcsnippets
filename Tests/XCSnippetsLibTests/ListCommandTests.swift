@@ -9,12 +9,12 @@ class ListCommandTests: XCTestCase {
   private let snippetDecoderMock = CodeSnippetDecoderMock()
   private lazy var command = ListCommand(files: filesMock, shell: shellMock, snippetDecoder: snippetDecoderMock)
 
-  func test_noFolder_shouldThrowError() throws {
+  func test_folderNotFound_shouldThrowError() throws {
     expect(try self.command.run(args: ["folder"])).to(throwError(CommandError.directoryNotFound("folder")))
   }
 
-  func test_emptyFolder() throws {
-    filesMock.structure = [
+  func test_folderIsEmpty() throws {
+    filesMock.folders = [
       "folder": []
     ]
 
@@ -22,13 +22,13 @@ class ListCommandTests: XCTestCase {
     expect(self.shellMock.echoMessages.first).to(equal("No snippets found in folder"))
   }
 
-  func test_folder() throws {
-    filesMock.structure = [
+  func test_folder_oneSnippet() throws {
+    filesMock.folders = [
       "folder": [
         "snippet.codesnippet"
       ]
     ]
-    snippetDecoderMock.snippetToReturn = .init(prefix: "", scopes: [], contents: "", identifier: "", language: "", summary: "", title: "title", isUser: true, version: 2)
+    snippetDecoderMock.snippetToReturn = .init(title: "title")
 
     try command.run(args: ["folder"])
     expect(self.shellMock.echoMessages.first).to(equal("snippet.codesnippet (title)"))

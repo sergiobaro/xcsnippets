@@ -8,10 +8,12 @@ struct CopyCommand: Command {
 
   private let files: Files
   private let shell: Shell
+  private let snippetDecoder: CodeSnippetDecoder
 
   init(files: Files, shell: Shell, snippetDecoder: CodeSnippetDecoder) {
     self.files = files
     self.shell = shell
+    self.snippetDecoder = snippetDecoder
   }
 
   func run(args: [String]) throws {
@@ -24,31 +26,35 @@ struct CopyCommand: Command {
 
     let replace = args.contains("--replace") || args.contains("-r")
 
-    let fm = FileManager.default
-    let sourcePath = fm.homeDirectoryForCurrentUser.path + Constants.snippetsDefaultPath
+    let sourcePath = files.homeFolder.appendingPathComponent(Constants.snippetsDefaultPath)
 
-    guard fm.directoryExists(atPath: sourcePath) else {
+    guard files.exists(sourcePath) else {
       throw CommandError.directoryNotFound(sourcePath)
     }
 
-    let snippets = try fm.contentsOfDirectory(atPath: sourcePath).filter {
+    let snippets = try files.contents(sourcePath).filter {
       $0.pathExtension == Constants.codeSnippetExtension
     }
 
     try snippets.forEach { snippet in
       let snippetSourcePath = sourcePath.appendingPathComponent(snippet)
       let snippetDestinationPath = destinationPath.appendingPathComponent(snippet)
-      print("Copying \"\(snippet)\"")
+
+      if let snippetCode = try? snippetDecoder.decodePath(snippetSourcePath) {
+        shell.echo("Copying \"\(snippet) (\(snippetCode.title))\"")
+      } else {
+        shell.echo("Copying \"\(snippet)\"")
+      }
 
       if replace {
-        try fm.removeItem(atPath: snippetDestinationPath)
+        try files.delete(snippetDestinationPath)
       }
 
       do {
-        try fm.copyItem(atPath: snippetSourcePath, toPath: snippetDestinationPath)
+        try files.copy(from: snippetSourcePath, to: snippetDestinationPath)
       } catch {
         if error.code == NSFileWriteFileExistsError {
-          print("Can not copy file \(snippet) because it already exists. Use --replace or -r to overwrite.")
+          shell.echo("Can not copy file \(snippet) because it already exists. Use --replace or -r to overwrite.")
         }
         else {
           throw error
