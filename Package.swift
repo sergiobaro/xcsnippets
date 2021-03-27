@@ -13,7 +13,7 @@ let package = Package(
     .library(name: "XCSnippetsLib", targets: ["XCSnippetsLib"])
   ],
   dependencies: [
-    .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "9.0.0")),
+    .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "9.0.0"))
   ],
   targets: [
     .target(
@@ -26,6 +26,6 @@ let package = Package(
     .testTarget(
       name: "XCSnippetsLibTests",
       dependencies: ["XCSnippetsLib", "Nimble"]
-    ),
+    )
   ]
 )

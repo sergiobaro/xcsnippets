@@ -52,7 +52,7 @@ struct InstallCommand: Command {
       }
       
       do {
-        try files.copy(from: snippetSourcePath, to: snippetDestinationPath)
+        try files.copy(fromPath: snippetSourcePath, toPath: snippetDestinationPath)
       } catch {
         if error.code == NSFileWriteFileExistsError {
           shell.echoError(CommandError.snippetAlreadyExists(snippet))

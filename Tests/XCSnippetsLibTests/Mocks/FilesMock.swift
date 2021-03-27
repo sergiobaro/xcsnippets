@@ -39,7 +39,7 @@ class FilesMock: Files {
     // empty
   }
 
-  func copy(from: String, to: String) throws {
+  func copy(fromPath: String, toPath: String) throws {
     // empty
   }
 }

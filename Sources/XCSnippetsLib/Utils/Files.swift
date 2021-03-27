@@ -13,7 +13,7 @@ protocol Files {
 
   func delete(_ path: String) throws
   func createFolder(_ path: String) throws
-  func copy(from: String, to: String) throws
+  func copy(fromPath: String, toPath: String) throws
 }
 
 class FilesDefault: Files {
@@ -56,7 +56,7 @@ class FilesDefault: Files {
     try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
   }
 
-  func copy(from: String, to: String) throws {
-    try fileManager.copyItem(atPath: from, toPath: to)
+  func copy(fromPath: String, toPath: String) throws {
+    try fileManager.copyItem(atPath: fromPath, toPath: toPath)
   }
 }
