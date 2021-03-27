@@ -1,6 +1,7 @@
 import Foundation
 
-struct CodeSnippetPlist: Codable {
+struct CodeSnippet: Codable {
+  
   let prefix: String
   let scopes: [String]
   let contents: String

@@ -7,5 +7,4 @@ class CommandFactoryErrorTests: XCTestCase {
     XCTAssertTrue(CommandFactoryError.unsupportedCommand("command") == .unsupportedCommand("command"))
     XCTAssertFalse(CommandFactoryError.unsupportedCommand("command1") == .unsupportedCommand("command2"))
   }
-
 }

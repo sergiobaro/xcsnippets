@@ -6,9 +6,13 @@ struct HelpCommand: Command {
   static var arguments = ""
   static var description = "displays this text"
 
-  init(args: [String]) throws {}
+  private let shell: Shell
 
-  func run() throws {
+  init(files: Files, shell: Shell, snippetDecoder: CodeSnippetDecoder) {
+    self.shell = shell
+  }
+
+  func run(args: [String]) throws {
     let result = Constants.commands.map {
       let argumentsString = $0.arguments.isEmpty ? "" : " " + $0.arguments
       let usageString = "  \($0.name)\(argumentsString):".padding(toLength: 35, withPad: " ", startingAt: 0)
@@ -16,6 +20,6 @@ struct HelpCommand: Command {
     }
     .joined(separator: "\n")
 
-    print("\n\(result)\n")
+    shell.echo("\n\(result)\n")
   }
 }

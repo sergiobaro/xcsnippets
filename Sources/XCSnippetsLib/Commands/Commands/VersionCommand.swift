@@ -6,9 +6,13 @@ struct VersionCommand: Command {
   static var arguments = ""
   static var description = "displays current version"
 
-  init(args: [String]) {}
+  private let shell: Shell
 
-  func run() {
-    print(Constants.version)
+  init(files: Files, shell: Shell, snippetDecoder: CodeSnippetDecoder) {
+    self.shell = shell
+  }
+
+  func run(args: [String]) {
+    shell.echo(Constants.version)
   }
 }

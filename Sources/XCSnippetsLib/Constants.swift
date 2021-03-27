@@ -11,6 +11,7 @@ struct Constants {
     InstallCommand.self,
     ListCommand.self,
     VersionCommand.self,
+    OpenCommand.self,
     HelpCommand.self
   ]
 }

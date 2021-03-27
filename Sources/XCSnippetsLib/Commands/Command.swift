@@ -27,7 +27,7 @@ protocol Command {
   static var arguments: String { get }
   static var description: String { get }
 
-  init(args: [String]) throws
+  init(files: Files, shell: Shell, snippetDecoder: CodeSnippetDecoder)
 
-  func run() throws
+  func run(args: [String]) throws
 }

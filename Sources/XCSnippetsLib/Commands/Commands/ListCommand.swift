@@ -4,33 +4,42 @@ import Foundation
 struct ListCommand: Command {
 
   static var name = "list"
-  static var arguments = ""
-  static var description = "lists installed snippets"
+  static var arguments = "<folder>"
+  static var description = "lists snippets in folder or installed folders"
 
-  init(args: [String]) throws {}
+  private let files: Files
+  private let shell: Shell
+  private let snippetDecoder: CodeSnippetDecoder
 
-  func run() throws {
-    let fm = FileManager.default
-    let sourcePath = fm.homeDirectoryForCurrentUser.path + Constants.snippetsDefaultPath
+  init(files: Files, shell: Shell, snippetDecoder: CodeSnippetDecoder) {
+    self.files = files
+    self.shell = shell
+    self.snippetDecoder = snippetDecoder
+  }
 
-    guard fm.directoryExists(atPath: sourcePath) else {
-      throw CommandError.directoryNotFound(sourcePath)
+  func run(args: [String]) throws {
+    let folder = args.first ?? files.homeFolder.appendingPathComponent(Constants.snippetsDefaultPath)
+
+    guard files.exists(folder) else {
+      throw CommandError.directoryNotFound(folder)
     }
 
-    let snippets = try fm.contentsOfDirectory(atPath: sourcePath).filter {
-      $0.pathExtension == Constants.codeSnippetExtension
+    let snippets = try files.contents(folder).filter {
+      return $0.pathExtension == Constants.codeSnippetExtension
+    }
+
+    if snippets.isEmpty {
+      shell.echo("No snippets found in \(folder)")
+      return
     }
 
     try snippets.forEach { snippet in
-      let snippetPath = sourcePath.appendingPathComponent(snippet)
-      guard let data = try String(contentsOfFile: snippetPath).data(using: .utf8) else {
-        print(snippet)
+      let snippetPath = folder.appendingPathComponent(snippet)
+      guard let codeSnippet = try snippetDecoder.decodePath(snippetPath) else {
+        shell.echo("\(snippet) (error decoding)")
         return
       }
-
-      let codeSnippet = try PropertyListDecoder().decode(CodeSnippetPlist.self, from: data)
-      print("\(snippet) (\(codeSnippet.title))")
+      shell.echo("\(snippet) (\(codeSnippet.title))")
     }
   }
-  
 }

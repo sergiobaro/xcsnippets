@@ -6,10 +6,15 @@ struct CopyCommand: Command {
   static var arguments = "<destination> --replace|-r"
   static var description = "copies snippets found in xcode default location to <destination>"
 
-  private let destinationPath: String
-  private let replace: Bool
+  private let files: Files
+  private let shell: Shell
 
-  init(args: [String]) throws {
+  init(files: Files, shell: Shell, snippetDecoder: CodeSnippetDecoder) {
+    self.files = files
+    self.shell = shell
+  }
+
+  func run(args: [String]) throws {
     if args.isEmpty {
       throw CommandError.missingArgument("destinationPath")
     }
@@ -17,11 +22,8 @@ struct CopyCommand: Command {
       throw CommandError.missingArgument("destinationPath")
     }
 
-    self.destinationPath = destinationPath
-    self.replace = args.contains("--replace") || args.contains("-r")
-  }
+    let replace = args.contains("--replace") || args.contains("-r")
 
-  func run() throws {
     let fm = FileManager.default
     let sourcePath = fm.homeDirectoryForCurrentUser.path + Constants.snippetsDefaultPath
 

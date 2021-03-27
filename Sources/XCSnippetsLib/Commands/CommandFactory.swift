@@ -2,18 +2,30 @@ import Foundation
 
 class CommandFactory {
 
-  func make(_ args: [String]) throws -> Command {
-    guard let commandName = args.first else {
-      return try HelpCommand(args: [])
+  private let files: Files
+  private let shell: Shell
+  private let snippetDecoder: CodeSnippetDecoder
+
+  init(files: Files, shell: Shell, snippetDecoder: CodeSnippetDecoder) {
+    self.files = files
+    self.shell = shell
+    self.snippetDecoder = snippetDecoder
+  }
+
+  func make(name: String?) throws -> Command {
+    guard let name = name, !name.isEmpty else {
+      return HelpCommand(files: files, shell: shell, snippetDecoder: snippetDecoder)
+    }
+    guard let command = findCommand(name: name) else {
+      throw CommandFactoryError.unsupportedCommand(name)
     }
 
-    for command in Constants.commands {
-      if commandName == command.name {
-        let commandArgs = Array(args.dropFirst())
-        return try command.init(args: commandArgs)
-      }
-    }
+    return command
+  }
 
-    throw CommandFactoryError.unsupportedCommand(commandName)
+  private func findCommand(name: String) -> Command? {
+    Constants.commands
+      .first { $0.name == name }
+      .map { $0.init(files: files, shell: shell, snippetDecoder: snippetDecoder) }
   }
 }

@@ -6,10 +6,15 @@ struct InstallCommand: Command {
   static var arguments = "<source> --replace|-r"
   static var description = "installs snippets found in <source> to xcode default location"
 
-  private let sourcePath: String
-  private let replace: Bool
+  private let files: Files
+  private let shell: Shell
 
-  init(args: [String]) throws {
+  init(files: Files, shell: Shell, snippetDecoder: CodeSnippetDecoder) {
+    self.files = files
+    self.shell = shell
+  }
+
+  func run(args: [String]) throws {
     if args.isEmpty {
       throw CommandError.missingArgument("sourcePath")
     }
@@ -17,11 +22,8 @@ struct InstallCommand: Command {
       throw CommandError.missingArgument("sourcePath")
     }
 
-    self.sourcePath = sourcePath
-    self.replace = args.contains("--replace") || args.contains("-r")
-  }
+    let replace = args.contains("--replace") || args.contains("-r")
 
-  func run() throws {
     let fm = FileManager.default
     let destinationPath = fm.homeDirectoryForCurrentUser.path + Constants.snippetsDefaultPath
     
