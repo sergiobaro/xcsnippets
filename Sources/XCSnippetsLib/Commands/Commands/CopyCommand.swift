@@ -17,9 +17,6 @@ struct CopyCommand: Command {
   }
 
   func run(args: [String]) throws {
-    if args.isEmpty {
-      throw CommandError.missingArgument("destinationPath")
-    }
     guard let destinationPath = args.first else {
       throw CommandError.missingArgument("destinationPath")
     }
@@ -54,9 +51,8 @@ struct CopyCommand: Command {
         try files.copy(from: snippetSourcePath, to: snippetDestinationPath)
       } catch {
         if error.code == NSFileWriteFileExistsError {
-          shell.echo("Can not copy file \(snippet) because it already exists. Use --replace or -r to overwrite.")
-        }
-        else {
+          shell.echoError(CommandError.snippetAlreadyExists(snippet))
+        } else {
           throw error
         }
       }

@@ -6,6 +6,7 @@ enum CommandError: LocalizedError {
   case directoryNotFound(String)
   case fileNotFound(String)
   case formatNotSupported(String)
+  case snippetAlreadyExists(String)
 
   var errorDescription: String? {
     switch self {
@@ -17,6 +18,8 @@ enum CommandError: LocalizedError {
       return "File not found \"\(file)\""
     case let .formatNotSupported(format):
       return "Format \"\(format)\" not supported"
+    case let .snippetAlreadyExists(snippet):
+      return "Can not install file \(snippet) because it already exists. Use --replace or -r to overwrite."
     }
   }
 }

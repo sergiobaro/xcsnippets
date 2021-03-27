@@ -29,8 +29,10 @@ class FilesMock: Files {
   }
 
   var deleteCalled = false
+  var deletePath: String?
   func delete(_ path: String) throws {
     deleteCalled = true
+    deletePath = path
   }
 
   func createFolder(_ path: String) throws {

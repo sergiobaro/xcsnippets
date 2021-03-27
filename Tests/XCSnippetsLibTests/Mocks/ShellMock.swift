@@ -2,10 +2,15 @@ import Foundation
 @testable import XCSnippetsLib
 
 class ShellMock: Shell {
-
+  
   var echoMessages = [String]()
   func echo(_ message: String) {
     echoMessages.append(message)
+  }
+  
+  var echoErrors = [Error]()
+  func echoError(_ error: Error) {
+    echoErrors.append(error)
   }
 
   var askMessages = [String]()
