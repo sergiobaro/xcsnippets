@@ -2,9 +2,9 @@ import Foundation
 
 struct HelpCommand: Command {
 
-  static var name = "help"
-  static var arguments = ""
-  static var description = "displays this text"
+  static var commandName = "help"
+  static var commandArguments = ""
+  static var commandDescription = "displays this text"
 
   private let shell: Shell
 
@@ -14,9 +14,9 @@ struct HelpCommand: Command {
 
   func run(args: [String]) throws {
     let result = Constants.commands.map {
-      let argumentsString = $0.arguments.isEmpty ? "" : " " + $0.arguments
-      let usageString = "  \($0.name)\(argumentsString):".padding(toLength: 35, withPad: " ", startingAt: 0)
-      return usageString + $0.description
+      let argumentsString = $0.commandArguments.isEmpty ? "" : " " + $0.commandArguments
+      let usageString = "  \($0.commandName)\(argumentsString):".padding(toLength: 35, withPad: " ", startingAt: 0)
+      return usageString + $0.commandDescription
     }
     .joined(separator: "\n")
 

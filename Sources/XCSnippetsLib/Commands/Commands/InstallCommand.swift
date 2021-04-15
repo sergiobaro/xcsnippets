@@ -2,9 +2,9 @@ import Foundation
 
 struct InstallCommand: Command {
 
-  static var name = "install"
-  static var arguments = "<source> --replace|-r"
-  static var description = "installs snippets found in <source> to xcode default location"
+  static var commandName = "install"
+  static var commandArguments = "<source> --replace|-r"
+  static var commandDescription = "installs snippets found in <source> to xcode default location"
 
   private let files: Files
   private let shell: Shell
@@ -55,7 +55,7 @@ struct InstallCommand: Command {
         try files.copy(fromPath: snippetSourcePath, toPath: snippetDestinationPath)
       } catch {
         if error.code == NSFileWriteFileExistsError {
-          shell.echoError(CommandError.snippetAlreadyExists(snippet))
+          shell.echoError(CommandError.snippetAlreadyExists(self, snippet))
         } else {
           throw error
         }

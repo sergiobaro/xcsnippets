@@ -2,9 +2,9 @@ import Foundation
 
 struct ListCommand: Command {
 
-  static var name = "list"
-  static var arguments = "<folder>"
-  static var description = "lists snippets in folder or installed folders"
+  static var commandName = "list"
+  static var commandArguments = "<folder>"
+  static var commandDescription = "lists snippets in folder or installed folders"
 
   private let files: Files
   private let shell: Shell

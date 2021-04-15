@@ -2,9 +2,9 @@ import Foundation
 
 struct CopyCommand: Command {
 
-  static var name = "copy"
-  static var arguments = "<destination> --replace|-r"
-  static var description = "copies snippets found in xcode default location to <destination>"
+  static var commandName = "copy"
+  static var commandArguments = "<destination> --replace|-r"
+  static var commandDescription = "copies snippets found in xcode default location to <destination>"
 
   private let files: Files
   private let shell: Shell
@@ -51,7 +51,7 @@ struct CopyCommand: Command {
         try files.copy(fromPath: snippetSourcePath, toPath: snippetDestinationPath)
       } catch {
         if error.code == NSFileWriteFileExistsError {
-          shell.echoError(CommandError.snippetAlreadyExists(snippet))
+          shell.echoError(CommandError.snippetAlreadyExists(self, snippet))
         } else {
           throw error
         }

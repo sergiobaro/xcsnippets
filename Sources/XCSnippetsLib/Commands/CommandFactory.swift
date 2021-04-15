@@ -25,7 +25,7 @@ class CommandFactory {
 
   private func findCommand(name: String) -> Command? {
     Constants.commands
-      .first { $0.name == name }
+      .first { $0.commandName == name }
       .map { $0.init(files: files, shell: shell, snippetDecoder: snippetDecoder) }
   }
 }

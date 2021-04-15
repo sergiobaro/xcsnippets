@@ -2,9 +2,9 @@ import Foundation
 
 struct OpenCommand: Command {
 
-  static var name = "open"
-  static var arguments = ""
-  static var description = "opens default snippets folder"
+  static var commandName = "open"
+  static var commandArguments = ""
+  static var commandDescription = "opens default snippets folder"
 
   private let files: Files
   private let shell: Shell
