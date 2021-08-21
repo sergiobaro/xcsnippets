@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>outlet</string>
+	<string>printvar</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>@IBOutlet private var &lt;#view#&gt;</string>
+	<string>print("&gt;&gt;&gt; &lt;#var#&gt;: \(&lt;#var#&gt;)")</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>01B9D805-57B4-45BE-87BF-872EC3D6E70E</string>
+	<string>018DE9B4-8800-4FE5-B858-AF7011DC1F61</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>IBOutlet</string>
+	<string>Print variable</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
